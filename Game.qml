@@ -6,6 +6,8 @@ Rectangle {
     width: 820; height: 370
     color: "lightblue"
 
+    FontLoader { id: localFont; source: "Bungee-Regular.ttf" }
+
     Text {
         id: solution
         text: MyScript.decodeWord(MyScript.secretWord)

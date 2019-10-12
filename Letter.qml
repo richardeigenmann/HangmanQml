@@ -15,10 +15,10 @@ Item {
         Text {
             id: myChar
             text: "_"
-            //anchors.horizontalCenter: parent.horizontalCenter
-            //anchors.verticalCenter: parent.verticalCenter
+            font.family: "Bungee"
             anchors.centerIn: parent
-            font.pointSize: 24; font.bold: true      
+            color: "#303030"
+            font.pointSize: 24;
         }
     }
 
