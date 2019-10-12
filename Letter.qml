@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Item {
-    id: container
+    id: root
     property alias letter: myChar.text
     signal clicked(string clickedChar)
 
@@ -28,7 +28,7 @@ Item {
     }
 
     function handlePickEvent() {
-        container.clicked(container.letter)
+        root.clicked(root.letter)
         //container.letter = '_'
         this.state = "obscured"
     }
