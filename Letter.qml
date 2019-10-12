@@ -29,6 +29,18 @@ Item {
 
     function handlePickEvent() {
         container.clicked(container.letter)
-        container.letter = '_'
-    } 
+        //container.letter = '_'
+        this.state = "obscured"
+    }
+
+    states: [
+        State {
+            name: "obscured";
+            PropertyChanges { target: myChar; text: '_' }
+        },
+        State {
+            name: "showing";
+            PropertyChanges { target: myChar; text: '_' }
+        }
+    ]
 }
