@@ -3,14 +3,15 @@ import QtQuick 2.0
 Item {
     id: root
     property alias letter: myChar.text
-    signal clicked(string clickedChar)
-
+    property string realChar: "?"
     width: 40; height: 40
+    signal clicked(string clickedChar)
 
     Rectangle {
         id: rectangle
         border.color: "white"
         anchors.fill: parent
+        state: "showing"
 
         Text {
             id: myChar
@@ -24,13 +25,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onClicked: handlePickEvent()
-    }
-
-    function handlePickEvent() {
-        root.clicked(root.letter)
-        //container.letter = '_'
-        this.state = "obscured"
+        onClicked: root.clicked(root.realChar)
     }
 
     states: [
@@ -40,7 +35,7 @@ Item {
         },
         State {
             name: "showing";
-            PropertyChanges { target: myChar; text: '_' }
+            PropertyChanges { target: myChar; text: root.realChar }
         }
     ]
 }

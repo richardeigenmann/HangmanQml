@@ -1,3 +1,7 @@
+// By default each import would load a new instance of the script but
+// we want to share the pickedLetters across instances therefore .pragma library
+.pragma library
+
 var pickedLetters = new Set([]);
 
 const secretWord = "OPENTECHSCHOOL"
@@ -7,19 +11,24 @@ function addLetter(letter) {
 }
 
 function showPickedLetters() {
-    pickedLetters.forEach(x => console.log(x));
+    console.log("pickedLettersSet: " + Array.from(pickedLetters).join(','));
+}
+
+// returns the letter if it is a member of the pickedLetters
+// or an underscore if not
+function revealLetter(testChar) {
+    return pickedLetters.has(testChar) ? testChar : "_";
+}
+
+function getLetter(index) {
+    return revealLetter(secretWord.charAt(index))
 }
 
 function decodeWord(word) {
     var decodedWord = ''
-    var missingCount = 0;
     for(var letterIndex in word){
-        if ( pickedLetters.has(word[letterIndex]) ) {
-            decodedWord += word[letterIndex];
-        } else {
-            decodedWord += '_';
-            missingCount++;
-        }
+        decodedWord += getLetter(letterIndex);
     }
     return decodedWord;
 }
+

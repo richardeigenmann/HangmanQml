@@ -11,13 +11,19 @@ Rectangle {
     Text {
         id: solution
         text: MyScript.decodeWord(MyScript.secretWord)
-        y: 30
-        anchors.horizontalCenter: root.horizontalCenter
+        y: 260
+        x: 20
         font.pointSize: 30; font.bold: true
 
         MouseArea { id: mouseArea; anchors.fill: parent }
     }
     
+    Word {
+        id: word
+        x: 10
+        y:30
+    }
+
     Keyboard {
         x: 20
         y: 100

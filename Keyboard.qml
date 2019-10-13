@@ -10,7 +10,12 @@ Item {
 
         Repeater {
             model: 26
-            Letter { letter: String.fromCharCode(65 + index); onClicked: letterPicked(clickedChar) }
+            Letter {
+                //letter: String.fromCharCode(65 + index);
+                realChar: String.fromCharCode(65 + index);
+                state: "showing"
+                onClicked: {this.state= "obscured"; letterPicked(clickedChar) }
+            }
         }
     }
 
