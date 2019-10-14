@@ -8,16 +8,6 @@ Rectangle {
 
     FontLoader { id: localFont; source: "Bungee-Regular.ttf" }
 
-    Text {
-        id: solution
-        text: MyScript.decodeWord(MyScript.secretWord)
-        y: 260
-        x: 20
-        font.pointSize: 30; font.bold: true
-
-        MouseArea { id: mouseArea; anchors.fill: parent }
-    }
-    
     Word {
         id: word
         x: 10
@@ -33,7 +23,7 @@ Rectangle {
     function handleLetterPicked(pickedChar) {
         MyScript.addLetter(pickedChar)
         const result = MyScript.decodeWord(MyScript.secretWord);
-        solution.text = MyScript.decodeWord(result)
+        word.refresh()
     }
 
     Balloons { x: 650; y: 10 }

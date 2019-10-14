@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Item {
-    id: container
+    id: root
     signal picked(string pickedChar)
    
     Grid {
@@ -11,15 +11,13 @@ Item {
         Repeater {
             model: 26
             Letter {
-                //letter: String.fromCharCode(65 + index);
                 realChar: String.fromCharCode(65 + index);
                 state: "showing"
-                onClicked: {this.state= "obscured"; letterPicked(clickedChar) }
+                onClicked: {
+                    this.state= "obscured";
+                    root.picked(clickedChar);
+                }
             }
         }
-    }
-
-    function letterPicked(pickedChar) {
-        container.picked(pickedChar)
     }
 }
