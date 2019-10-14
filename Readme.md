@@ -9,6 +9,15 @@ cd \your\directory\HangmanQml
 qmlscene Game.qml
 ```
 
+## ToDo
+
+* use state on the game for won or lost
+* stop accepting input on endgame state
+* draw lines from ballons to a knot
+* draw ballons dynamically
+* burst the ballons
+
+
 ## Learn QML and QT
 
 See <http://qmlbook.github.io/index.html>
