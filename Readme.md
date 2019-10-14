@@ -35,6 +35,12 @@ See <http://qmlbook.github.io/index.html>
 ### Using a connected signal to refresh the word
 
 
+## To Explore
+
+* How to test? Unit tests? GUI tests?
+* How to package for Desktop, RPM, Android
+* Interacting with C++
+
 ## Sources
 
 Man on Chair found here: <http://www.clker.com/clipart-735475.html> The website claims Free Clipart instead of a license.
