@@ -11,24 +11,60 @@ Rectangle {
     Word {
         id: word
         x: 10
-        y:30
+        y:40
     }
 
     Keyboard {
         x: 20
-        y: 100
+        y: 160
         onPicked: handleLetterPicked(pickedChar)
     }
     
     function handleLetterPicked(pickedChar) {
         MyScript.addLetter(pickedChar)
-        const result = MyScript.decodeWord(MyScript.secretWord);
-        word.refresh()
+        if ( MyScript.winnerChar(pickedChar) ) {
+            word.refresh()
+            if ( MyScript.allRevealed() ) {
+                gameWon.visible = true
+            }
+        } else {
+            balloons.burstOne()
+        }
     }
 
-    Balloons { x: 650; y: 10 }
+    Balloons {
+        id: balloons
+        x: 650;
+        y: 10
+        count: 5
+        onDie: {
+            gameOver.visible = true;
+        }
+    }
  
     Crocodile { x: 660; y:250 }
 
     Image { x:580; y: 170; width: 240; height: 200; source: "water.svg" }
+
+    Text {
+        id: gameOver
+        visible: false
+        x: 200
+        y: 100
+        text: "Game Over!"
+        font.family: "Bungee"
+        color: "#303030"
+        font.pointSize: 30;
+    }
+
+    Text {
+        id: gameWon
+        visible: false
+        x: 200
+        y: 100
+        text: "You Win!"
+        font.family: "Bungee"
+        color: "#303030"
+        font.pointSize: 30;
+    }
 }

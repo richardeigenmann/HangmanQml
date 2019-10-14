@@ -32,3 +32,15 @@ function decodeWord(word) {
     return decodedWord;
 }
 
+function winnerChar(letter) {
+    return secretWord.includes(letter);
+}
+
+function allRevealed() {
+    for(var letterIndex in secretWord){
+        if ( ! pickedLetters.has(secretWord.charAt(letterIndex)) ) {
+            return false;
+        }
+    }
+    return true;
+}
