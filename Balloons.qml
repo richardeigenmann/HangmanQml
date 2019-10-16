@@ -5,18 +5,27 @@ Item {
 
     property int count: 0
     signal die()
+    property variant balloonColors: ["green","yellow","blue","red","pink"]
 
-    Component.onCompleted: {
-        var b;
-        var sprite;
-        b = Qt.createComponent("Balloon.qml");
-        sprite = b.createObject(root, {x: 5, y: 5, color: "green" });
-        sprite = b.createObject(root, {x: 40, y: 2, color: "yellow" });
-        sprite = b.createObject(root, {x: 75, y: 8, color: "blue" });
-        sprite = b.createObject(root, {x: 25, y: 25, color: "red" });
-        sprite = b.createObject(root, {x: 65, y: 25, color: "pink" });
+    Component {
+        id: delegate
+        Column {
+            id: wrapper
+            Balloon{ color: balloonColors[index % balloonColors.length] }
+        }
     }
 
+    PathView {
+        anchors.fill: parent
+        delegate: delegate
+        model: root.count
+
+        path: Path {
+            startX: 40; startY: 35
+            PathQuad { x: 140; y: 40; controlX: 80; controlY: 95 }
+            PathQuad { x: 20; y: 50; controlX: 80; controlY: 5 }
+        }
+    }
 
     Text {
         text: root.count
@@ -29,8 +38,8 @@ Item {
         source: "maninchair.png"
         x:40
         y:110
-        MouseArea { 
-            id: mouseArea; anchors.fill: parent 
+        MouseArea {
+            id: mouseArea; anchors.fill: parent
             onClicked: die()
         }
     }

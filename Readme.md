@@ -14,7 +14,6 @@ qmlscene Game.qml
 * use state on the game for won or lost
 * stop accepting input on endgame state
 * draw lines from ballons to a knot
-* draw ballons dynamically
 * burst the ballons
 
 
@@ -33,6 +32,24 @@ See <http://qmlbook.github.io/index.html>
 ### Using a repeater to create the keyboard
 
 ### Using a connected signal to refresh the word
+
+### Laying out the balloons
+
+Since we don't know up front how many balloons will be holding up the
+man in the chair we need to generate the balloons dynamically and lay
+them out in an attractive fashion. QML gives us the Path object and has
+a number of [PathElements](https://doc.qt.io/qt-5/qml-qtquick-path.html#pathElements-prop)
+along which it can lay out the n Balloon shapes that it's "delegate"
+will create.
+
+```
+path: Path {
+    startX: 40; startY: 35
+    PathQuad { x: 140; y: 40; controlX: 80; controlY: 95 }
+    PathQuad { x: 20; y: 50; controlX: 80; controlY: 5 }
+}
+```
+
 
 
 ## To Explore
