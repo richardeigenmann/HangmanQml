@@ -12,7 +12,8 @@ Item {
         id: balloonModel
     }
 
-    Component.onCompleted: {
+    function createBalloons() {
+        balloonModel.clear();
         [...Array(count)].forEach(( _, index) =>{
                                       var component = Qt.createComponent("Balloon.qml");
                                       balloonModel.append(component.createObject(root, {color: balloonColors[index % balloonColors.length]}));
@@ -45,11 +46,15 @@ Item {
         State {
             name: "dead";
             PropertyChanges { target: maninchair; y: 220; rotation: 180; }
+        },
+        State {
+            name: "alive";
+            PropertyChanges { target: maninchair; y: 110; rotation: 0; }
         }
     ]
 
     transitions: Transition {
-        from: ""; to: "dead"; reversible: false
+        from: "alive"; to: "dead"; reversible: false
         ParallelAnimation {
             NumberAnimation { properties: "y,rotation"; duration: 160; easing.type: Easing.InOutQuad }
         }

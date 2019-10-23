@@ -3,6 +3,7 @@ import QtQuick 2.0
 Item {
     id: root
     signal picked(string pickedChar)
+    signal reset
    
     Grid {
         id: keyboardGrid
@@ -14,8 +15,14 @@ Item {
                 realChar: String.fromCharCode(65 + index);
                 state: "showing"
                 onClicked: {
-                    this.state= "obscured";
+                    state= "obscured";
                     root.picked(clickedChar);
+                }
+                Component.onCompleted: {
+                    root.reset.connect(resetState)
+                }
+                function resetState() {
+                    state = "showing";
                 }
             }
         }

@@ -33,6 +33,26 @@ See <http://qmlbook.github.io/index.html>
 
 ### Using a connected signal to refresh the word
 
+The signal refresh on the word object is used to trigger the refresh of the individual
+letters in the word. This is achieved by waiting till the child objects of the repeater
+have been created Component.onCompleted and then using the connect function to bind
+the reassessState function on the delegate to the refresh signal on the word.
+
+```JavaScript
+Component.onCompleted: {
+    root.refresh.connect(reassessState)
+}
+function reassessState() {
+    state= MyScript.pickedLetters.has(realChar) ? "showing" : "obscured"
+}
+```
+
+### Using a string property for the word
+
+The Word object is a Repeater based on a model. By choosing a string property as the
+model for the Repeater we can have the repeater update the number of characters it
+shows when the model changes.
+
 ### Creating the balloons
 
 As described in the QML book in the chapter [The ObjectModel](http://qmlbook.github.io/ch07-modelview/modelview.html#the-objectmodel)
@@ -111,3 +131,4 @@ Water found here: <http://www.clker.com/clipart-14950.html> The website claims F
 
 Bungee Font by David Jonathan Ross licensed OFL available on Goolge Fonts <https://fonts.google.com/specimen/Bungee?selection.family=Bungee> or <https://www.1001freefonts.com/bfonts153.php>
 
+The list of words is retrieved from <https://www.wordgenerator.net/pictionary-word-generator.php>

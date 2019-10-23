@@ -4,7 +4,9 @@
 
 var pickedLetters = new Set([]);
 
-const secretWord = "OPENTECHSCHOOL"
+var secretWord = "OPENTECHSCHOOL"
+
+var secretWords = [];
 
 function addLetter(letter) {
     pickedLetters.add(letter);

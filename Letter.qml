@@ -3,7 +3,7 @@ import QtQuick 2.0
 Item {
     id: root
     property alias letter: myChar.text
-    property string realChar: "?"
+    property string realChar: ""
     width: 40; height: 40
     signal clicked(string clickedChar)
 
