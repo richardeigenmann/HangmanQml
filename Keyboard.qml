@@ -15,8 +15,10 @@ Item {
                 realChar: String.fromCharCode(65 + index);
                 state: "showing"
                 onClicked: {
-                    state= "obscured";
-                    root.picked(clickedChar);
+                    if ( state == "showing" ) {
+                        state= "obscured";
+                        root.picked(clickedChar);
+                    }
                 }
                 Component.onCompleted: {
                     root.reset.connect(resetState)

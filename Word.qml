@@ -5,6 +5,8 @@ Item {
     id: root
     signal refresh()
     property string myWord: ""
+    state: "initializing"
+    onStateChanged: root.refresh()
 
     Row {
         id: myWord
@@ -21,11 +23,25 @@ Item {
                     root.refresh.connect(reassessState)
                 }
                 function reassessState() {
-                    console.log("Word reassessState ", realChar );
-                    MyScript.showPickedLetters();
-                    state= MyScript.pickedLetters.has(realChar) ? "showing" : "obscured"
+                    state = MyScript.pickedLetters.has(realChar) || root.state == "won" || root.state == "dead" ? "showing" : "obscured"
                 }
             }
         }
     }
+
+    states: [
+        State {
+            name: "initializing";
+        },
+        State {
+            name: "playing";
+        },
+        State {
+            name: "won";
+        },
+        State {
+            name: "dead";
+        }
+    ]
+
 }

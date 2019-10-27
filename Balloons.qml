@@ -1,28 +1,32 @@
-import QtQuick 2.0
-import QtQml.Models 2.1
+import QtQuick 2.13
 
 Item {
     id: root
-
     property int count: 0
-    signal die()
     property variant balloonColors: ["green","yellow","blue","red","pink"]
+    property int hookX : 75
+    property int hookY : 160
 
-    ObjectModel {
-        id: balloonModel
+    onCountChanged: {
+        myCanvas.requestPaint();
     }
 
-    function createBalloons() {
-        balloonModel.clear();
-        [...Array(count)].forEach(( _, index) =>{
-                                      var component = Qt.createComponent("Balloon.qml");
-                                      balloonModel.append(component.createObject(root, {color: balloonColors[index % balloonColors.length]}));
-                                  });
+    Component {
+        id: itemDelegate
+        Balloon {
+            width: 50
+            height: 70
+            hookX: root.hookX
+            hookY: root.hookY
+            balloonColor: root.balloonColors[index % root.balloonColors.length]
+        }
     }
 
     PathView {
+        id: myPathView
         anchors.fill: parent
-        model: balloonModel
+        model: root.count
+        delegate: itemDelegate
 
         path: Path {
             startX: 40; startY: 35
@@ -31,44 +35,40 @@ Item {
         }
     }
 
-    Image {
-        id: maninchair
-        source: "maninchair.png"
-        x:40
-        y:110
-        MouseArea {
-            id: mouseArea; anchors.fill: parent
-            onClicked: die()
+
+    Canvas {
+        id: myCanvas
+        width: 200
+        height: 300
+        onPaint: {
+            const ctx = getContext("2d")
+            ctx.reset();
+
+            // figure out the order in which to draw the balloons by sorting
+            // them in z order.
+            function compare( a, b ) {
+                if ( a.z < b.z ){
+                    return -1;
+                }
+                if ( a.z > b.z ){
+                    return 1;
+                }
+                return 0;
+            }
+
+            let zOrderMap = new Map();
+            for (var i=1; i<=root.count; i++) {
+                zOrderMap.set(i, myPathView.children[i].z);
+            }
+
+            const sortedZOrderMap = new Map([...zOrderMap.entries()].sort((a, b) => b[1] - a[1]));
+
+            // draw the balloons in z-order
+            for ( let i of sortedZOrderMap.keys() ) {
+                myPathView.children[i].drawBalloon(ctx);
+            }
         }
     }
 
-    states: [
-        State {
-            name: "dead";
-            PropertyChanges { target: maninchair; y: 220; rotation: 180; }
-        },
-        State {
-            name: "alive";
-            PropertyChanges { target: maninchair; y: 110; rotation: 0; }
-        }
-    ]
 
-    transitions: Transition {
-        from: "alive"; to: "dead"; reversible: false
-        ParallelAnimation {
-            NumberAnimation { properties: "y,rotation"; duration: 160; easing.type: Easing.InOutQuad }
-        }
-    }
-
-    onDie: {
-        root.state = "dead"
-    }
-
-    function burstOne() {
-        count--;
-        balloonModel.get(count).state= "deflated";
-        if ( count < 1 ) {
-            die();
-        }
-    }
 }

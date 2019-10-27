@@ -2,15 +2,13 @@ Balloon.qml
 Balloons.qml
 Crocodile.qml
 Game.qml
-Game.qmlc
 Keyboard.qml
-Keyboard.qmlc
 Letter.qml
-Letter.qmlc
+ManInChair.qml
 Readme.md
 Word.qml
 crocodile.svg
 maninchair.png
 script.js
-script.jsc
+testBalloons.qml
 water.svg

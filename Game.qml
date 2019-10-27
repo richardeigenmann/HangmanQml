@@ -6,6 +6,9 @@ Rectangle {
     id: root
     width: 820; height: 370
     color: "lightblue"
+    property int lives: 5
+    property int newGameLives: 5
+    FontLoader { id: localFont; source: "Bungee-Regular.ttf" }
     state: "initializing"
 
     states: [
@@ -23,13 +26,33 @@ Rectangle {
         }
     ]
 
-    FontLoader { id: localFont; source: "Bungee-Regular.ttf" }
+    onLivesChanged: {
+        if ( lives < 1 ) {
+            state = "dead"
+        }
+    }
+
+    function startGame() {
+        MyScript.pickedLetters.clear();
+        keyboard.reset()
+        if ( MyScript.secretWords.length < 1 ) {
+            root.state = "initializing";
+            loadWordsFromServer();
+        } else {
+            MyScript.secretWord = MyScript.secretWords.shift();
+            word.myWord = MyScript.secretWord;
+            console.log(MyScript.secretWord);
+            root.lives = root.newGameLives;
+            root.state = "playing";
+        }
+    }
 
     Word {
         id: word
         x: 10
         y:40
-        visible: root.state == "playing" || root.state == "won" || root.state == "dead"
+        visible:  root.state != "initializing"
+        state: root.state
     }
 
     Keyboard {
@@ -48,20 +71,39 @@ Rectangle {
                 root.state = "won"
             }
         } else {
-            balloons.burstOne()
+            root.lives--
         }
     }
 
     Balloons {
         id: balloons
-        x: 650;
+        x: 650
         y: 10
-        onDie: {
-            root.state = "dead"
-        }
+        count: root.lives
     }
 
-    Crocodile { x: 660; y:250 }
+    ManInChair {
+        x:690
+        y:120
+        state: root.state == "dead" ? "dead" : "alive"
+    }
+
+    Crocodile {
+        x: 660
+        Component.onCompleted: {
+            root.onLivesChanged.connect(reassessState);
+            root.onStateChanged.connect(reassessState);
+        }
+        function reassessState() {
+            if ( ( root.state == "playing" && root.lives == root.newGameLives ) || root.state == "won") {
+                state = "hidden";
+            } else if ( root.state == "dead" ) {
+                state = "feeding";
+            } else {
+                state = "hungry";
+            }
+        }
+    }
 
     Image { x:580; y: 170; width: 240; height: 200; source: "water.svg" }
 
@@ -110,7 +152,12 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        console.log("Now load the words from the webservice");
+        loadWordsFromServer();
+    }
+
+    function loadWordsFromServer() {
+        const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        console.log("Attempting to load the words from the webservice at " + Url);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if(xhr.readyState === XMLHttpRequest.DONE) {
@@ -119,24 +166,8 @@ Rectangle {
                 startGame();
             }
         }
-        xhr.open("GET", "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false");
+        xhr.open("GET", Url);
         xhr.send();
     }
 
-    function startGame() {
-        MyScript.showPickedLetters();
-        MyScript.pickedLetters.clear();
-        console.log("clear");
-        MyScript.showPickedLetters();
-        keyboard.reset()
-        MyScript.secretWord = MyScript.secretWords.shift();
-        word.myWord = MyScript.secretWord;
-        console.log(MyScript.secretWord);
-        //balloons.count = MyScript.secretWord.length;
-        balloons.state = "alive"
-        balloons.count = 10;
-        balloons.createBalloons();
-        root.state = "playing";
-
-    }
 }

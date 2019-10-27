@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.10.82, 2019-10-23T22:27:02. -->
+<!-- Written by QtCreator 4.10.82, 2019-10-26T23:51:27. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -189,7 +189,7 @@
     <value type="bool" key="RunConfiguration.UseMultiProcess">false</value>
     <value type="bool" key="RunConfiguration.UseQmlDebugger">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">false</value>
-    <value type="QString" key="RunConfiguration.WorkingDirectory">/richi/Src/HangmanQml</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory">/richi/Src/HangmanQml/</value>
     <value type="QString" key="RunConfiguration.WorkingDirectory.default"></value>
    </valuemap>
    <value type="int" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
