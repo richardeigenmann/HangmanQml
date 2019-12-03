@@ -11,6 +11,10 @@ cd \your\directory\HangmanQml
 qmlscene Game.qml
 ```
 
+The game can also be started from a C++ program. To do this the project has a
+`main.cpp` and a `Window.qml` file. The qtcreator will run this when you click the
+green "run" triangle.
+
 ## Motivation: Learn QML and QT
 
 QML is an interesting extension to the QT C++ framework. It is a delarative language

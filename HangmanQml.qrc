@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Game.qml</file>
+        <file>Bungee-Regular.ttf</file>
+        <file>crocodile.svg</file>
+        <file>maninchair.png</file>
+        <file>water.svg</file>
+        <file>script.js</file>
+        <file>ManInChair.qml</file>
+        <file>Balloon.qml</file>
+        <file>Balloons.qml</file>
+        <file>Crocodile.qml</file>
+        <file>Keyboard.qml</file>
+        <file>Letter.qml</file>
+        <file>Word.qml</file>
+        <file>Window.qml</file>
+    </qresource>
+</RCC>
