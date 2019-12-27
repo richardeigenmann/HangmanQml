@@ -156,11 +156,13 @@ Rectangle {
     }
 
     function loadWordsFromServer() {
-        const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        //const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        const Url = "http://localhost:8000/words/application/p.php?type=1&id=charades_easy&spaceflag=false";
         console.log("Attempting to load the words from the webservice at " + Url);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {
             if(xhr.readyState === XMLHttpRequest.DONE) {
+                console.log("Got a response from the word url: " + Url);
                 const response = xhr.responseText.toString();
                 MyScript.secretWords = response.split(",").map(w => w.toUpperCase());
                 startGame();

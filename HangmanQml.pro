@@ -1,4 +1,4 @@
-QT += qml quick widgets
+QT += qml quick widgets svg
 
 CONFIG += c++17
 
@@ -11,3 +11,5 @@ SOURCES += \
 
 DISTFILES += \
     Readme.md
+
+#QMAKE_LFLAGS += --emrun

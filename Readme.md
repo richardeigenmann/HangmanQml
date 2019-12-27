@@ -173,6 +173,31 @@ function loadWordsFromServer() {
 }
 ```
 
+## The next level: Compile to Web-Assembly
+
+```bash
+cd /path/to/emsdk
+cd /home/richi/emsdk
+./emsdk install sdk-fastcomp-1.38.27-64bit
+./emsdk activate --embedded sdk-fastcomp-1.38.27-64bit
+
+cd /path/to/HangmanQml
+cd /richi/Src/HangmanQml
+/path/to/Qt/5.14.0/wasm_32/bin/qmake
+/richi/Qt/5.14.0/wasm_32/bin/qmake
+make
+
+# emrun --browser=chrome HangmanQml.html
+# due to CORS restriction lets start a full Nginx server:
+
+sudo nginx -c /richi/Src/HangmanQml/nginx.conf
+
+# then open up http://localhost:8000/HangmanQml.html
+
+
+# kill nginx afterwards:
+sudo nginx -s stop
+```
 
 ## To Explore
 

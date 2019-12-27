@@ -50,3 +50,11 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
+
+# Target files
+HangmanQml
+HangmanQml.html
+HangmanQml.js
+HangmanQml.wasm
+qtloader.js
+qtlogo.svg
