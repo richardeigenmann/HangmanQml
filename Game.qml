@@ -148,6 +148,7 @@ Rectangle {
         visible: root.state == "won" || root.state == "dead"
         onClicked: {
             startGame();
+            messageClass.doMessageChange();
         }
     }
 
