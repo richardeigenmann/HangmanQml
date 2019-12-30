@@ -1,4 +1,4 @@
-QT += qml quick widgets svg
+QT += qml quick widgets core svg
 
 CONFIG += c++17
 

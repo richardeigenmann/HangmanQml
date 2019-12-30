@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include <QDebug>
 
 class Message : public QObject {
 
@@ -9,7 +10,7 @@ class Message : public QObject {
         explicit Message(QObject *parent=nullptr);
 
     public slots:
-        void doMessageChange();
+        QString doMessageChange(QString msg);
 
     private:
         explicit Message ( const Message & rhs ) = delete;

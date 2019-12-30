@@ -45,6 +45,9 @@ Rectangle {
             root.lives = root.newGameLives;
             root.state = "playing";
         }
+        var resp = messageClass.doMessageChange("this is something QML provided");
+        print ("in QML: received from C++: " + resp);
+
     }
 
     Word {
@@ -148,7 +151,6 @@ Rectangle {
         visible: root.state == "won" || root.state == "dead"
         onClicked: {
             startGame();
-            messageClass.doMessageChange();
         }
     }
 
