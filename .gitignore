@@ -58,3 +58,4 @@ HangmanQml.js
 HangmanQml.wasm
 qtloader.js
 qtlogo.svg
+.qtc_clangd/

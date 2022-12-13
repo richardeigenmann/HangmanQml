@@ -1,6 +1,6 @@
-import QtQuick.Window 2.13
-import QtQuick 2.13
-import QtQuick.Controls 1.5
+import QtQuick.Window
+import QtQuick
+import QtQuick.Controls
 
 //ApplicationWindow {
 Window {
