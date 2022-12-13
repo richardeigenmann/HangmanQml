@@ -1,6 +1,6 @@
-import QtQuick 2.13
+import QtQuick
+import QtQuick.Controls
 import "script.js" as MyScript
-import QtQuick.Controls 2.5
 
 Rectangle {
     id: root
@@ -54,7 +54,7 @@ Rectangle {
         id: word
         x: 10
         y:40
-        visible:  root.state != "initializing"
+        visible:  root.state !== "initializing"
         state: root.state
     }
 
@@ -63,7 +63,7 @@ Rectangle {
         x: 20
         y: 160
         onPicked: handleLetterPicked(pickedChar)
-        visible: root.state == "playing"
+        visible: root.state === "playing"
     }
     
     function handleLetterPicked(pickedChar) {
@@ -88,7 +88,7 @@ Rectangle {
     ManInChair {
         x:690
         y:120
-        state: root.state == "dead" ? "dead" : "alive"
+        state: root.state === "dead" ? "dead" : "alive"
     }
 
     Crocodile {
@@ -98,9 +98,9 @@ Rectangle {
             root.onStateChanged.connect(reassessState);
         }
         function reassessState() {
-            if ( ( root.state == "playing" && root.lives == root.newGameLives ) || root.state == "won") {
+            if ( ( root.state === "playing" && root.lives === root.newGameLives ) || root.state === "won") {
                 state = "hidden";
-            } else if ( root.state == "dead" ) {
+            } else if ( root.state === "dead" ) {
                 state = "feeding";
             } else {
                 state = "hungry";
@@ -112,7 +112,7 @@ Rectangle {
 
     Text {
         id: gameOver
-        visible: root.state == "dead"
+        visible: root.state === "dead"
         x: 200
         y: 100
         text: "Game Over!"
@@ -123,7 +123,7 @@ Rectangle {
 
     Text {
         id: gameWon
-        visible: root.state == "won"
+        visible: root.state === "won"
         x: 200
         y: 100
         text: "You Win!"
@@ -134,7 +134,7 @@ Rectangle {
 
     Text {
         id: loading
-        visible: root.state == "initializing"
+        visible: root.state === "initializing"
         x: 200
         y: 100
         text: "Loading..."
@@ -148,7 +148,7 @@ Rectangle {
         text: "New Game"
         x: 260
         y: 200
-        visible: root.state == "won" || root.state == "dead"
+        visible: root.state === "won" || root.state === "dead"
         onClicked: {
             startGame();
         }
@@ -159,8 +159,8 @@ Rectangle {
     }
 
     function loadWordsFromServer() {
-        //const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
-        const Url = "http://localhost:8000/words/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        //const Url = "http://localhost:8000/words/application/p.php?type=1&id=charades_easy&spaceflag=false";
         console.log("Attempting to load the words from the webservice at " + Url);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {

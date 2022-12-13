@@ -4,11 +4,11 @@
 
 ## How to run it
 
-Ensure you have QML installed. You need to know where the qmlscene program resides.
+Ensure you have QML from qt.io installed. You need to know where the qmlscene program resides.
 
 ```bash
 cd \your\directory\HangmanQml
-qmlscene Game.qml
+qml Game.qml
 ```
 
 The game can also be started from a C++ program. To do this the project has a
@@ -180,11 +180,13 @@ cd /path/to/emsdk
 cd /home/richi/emsdk
 ./emsdk install sdk-fastcomp-1.38.27-64bit
 ./emsdk activate --embedded sdk-fastcomp-1.38.27-64bit
+source ./emsdk_env.sh
 
 cd /path/to/HangmanQml
 cd /richi/Src/HangmanQml
 /path/to/Qt/5.14.0/wasm_32/bin/qmake
 /richi/Qt/5.14.0/wasm_32/bin/qmake
+make clean
 make
 
 # emrun --browser=chrome HangmanQml.html

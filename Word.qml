@@ -1,4 +1,5 @@
-import QtQuick 2.12
+import QtQuick
+import QtQuick.Controls
 import "script.js" as MyScript
 
 Item {
@@ -23,7 +24,7 @@ Item {
                     root.refresh.connect(reassessState)
                 }
                 function reassessState() {
-                    state = MyScript.pickedLetters.has(realChar) || root.state == "won" || root.state == "dead" ? "showing" : "obscured"
+                    state = MyScript.pickedLetters.has(realChar) || root.state === "won" || root.state === "dead" ? "showing" : "obscured"
                 }
             }
         }
