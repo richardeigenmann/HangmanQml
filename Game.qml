@@ -159,8 +159,10 @@ Rectangle {
     }
 
     function loadWordsFromServer() {
-        const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
-        //const Url = "http://localhost:8000/words/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        // use this with qml and c++
+        //const Url = "https://www.wordgenerator.net/application/p.php?type=1&id=charades_easy&spaceflag=false";
+        // use this with WebAssemby because we get a CORS issue otherwise
+        const Url = "http://localhost:8000/words/application/p.php?type=1&id=charades_easy&spaceflag=false";
         console.log("Attempting to load the words from the webservice at " + Url);
         var xhr = new XMLHttpRequest();
         xhr.onreadystatechange = function() {

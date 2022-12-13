@@ -16,4 +16,10 @@ DISTFILES += \
 HEADERS += \
     message.h
 
+CONFIG(debug, debug|release) {
+    DESTDIR = build/debug
+} else {
+    DESTDIR = build/release
+}
+
 #QMAKE_LFLAGS += --emrun

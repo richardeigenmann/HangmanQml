@@ -15,6 +15,14 @@ The game can also be started from a C++ program. To do this the project has a
 `main.cpp` and a `Window.qml` file. The qtcreator will run this when you click the
 green "run" triangle.
 
+```bash
+cd \your\directory\HangmanQml
+# creates the Makefile
+qmake ./HangmanQml.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
+make
+build/debug/HangmanQml
+```
+
 ## Motivation: Learn QML and QT
 
 QML is an interesting extension to the QT C++ framework. It is a delarative language
@@ -25,10 +33,10 @@ The heavy lifting and runtime critical processing can be delegated to C++ which 
 interact with the QML GUI.
 
 Since you only learn by doing a real project, here is a Hangman game that loads a
-list of words from a webservice and lets you try your skill at guessing. For a wrong
+list of words from a webservice and lets you try your skill at guessing one of them. For a wrong
 letter you lose a balloon and when no more balloons are left, the poor man in his chair
 is fed to the ravenous crocodile. The entire game is done in QML and JavaScript and doesn't
-interact with C++.
+interact with C++. (Well, almost not.)
 
 I used this free online book to learn QML and recommend it highly: <http://qmlbook.github.io/index.html>
 
@@ -78,7 +86,7 @@ MouseArea {
 
 ### Using a static JavaScript to carry state from one item to the next
 
-I use a JavaScript array for the secreWords that come from the webservice and a
+I use a JavaScript array for the secretWords that come from the webservice and a
 JavaScript Set for the pickedLetters. Oddly when you import a JavaScript file into a
 QML object it creates a new instance of this in memory which is not desired. I would
 rather have a "static" instance of the library. This is achieved with the somewhat
@@ -97,7 +105,7 @@ var secretWords = [];
 ### Using a repeater to create the keyboard
 
 A Repeater with a "model" of 26 instances is used create the alphabet. The letters
-are the delegate to the model and are laid out in a Grid.
+are the delegate to the model and are laid out in a grid.
 
 ### Using a connected signal to refresh the word
 
@@ -117,8 +125,8 @@ function reassessState() {
 
 ### Using a string property for the word
 
-The Word object is a Repeater based on a model. By choosing a string property as the
-model for the Repeater we can have the repeater update the number of characters it
+The word object is a repeater based on a model. By choosing a string property as the
+model for the repeater we can have the repeater update the number of characters it
 shows when the model changes.
 
 ### The color of the balloons
@@ -137,7 +145,7 @@ them out in an attractive fashion. For this we use a number model and bind it to
 the count property. This way if the model is changed the PathView will add or remove the
 balloons as needed.
 
-QML gives us the Path object and has
+QML gives us the path object and has
 a number of [PathElements](https://doc.qt.io/qt-5/qml-qtquick-path.html#pathElements-prop)
 along which it can lay out the n Balloon shapes that it's "delegate"
 will create.
@@ -175,20 +183,25 @@ function loadWordsFromServer() {
 
 ## The next level: Compile to Web-Assembly
 
+Install emscripten by following the instructions: https://emscripten.org/docs/getting_started/downloads.html
+
 ```bash
-cd /path/to/emsdk
-cd /home/richi/emsdk
-./emsdk install sdk-fastcomp-1.38.27-64bit
-./emsdk activate --embedded sdk-fastcomp-1.38.27-64bit
-source ./emsdk_env.sh
+# The version matters to QT since there is no ability
+# this is for QT 6.4:
+/home/richi/emsdk/emsdk install 3.1.14
+/home/richi/emsdk/emsdk activate 3.1.14
+
+source "/path/to/emsdk/emsdk_env.sh"
+source /home/richi/emsdk/emsdk_env.sh 
 
 cd /path/to/HangmanQml
-cd /richi/Src/HangmanQml
-/path/to/Qt/5.14.0/wasm_32/bin/qmake
-/richi/Qt/5.14.0/wasm_32/bin/qmake
+/path/to/Qt/6.4.1/wasm_32/bin/qmake
+/home/richi/Qt/6.4.1/wasm_32/bin/qmake
 make clean
 make
 
+# could start if we didn't have a CORS confilct with loading the words
+# cd build/release
 # emrun --browser=chrome HangmanQml.html
 # due to CORS restriction lets start a full Nginx server:
 
